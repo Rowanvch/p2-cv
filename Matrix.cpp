@@ -7,7 +7,19 @@
 // EFFECTS:  Initializes *mat as a Matrix with the given width and height,
 //           with all elements initialized to 0.
 void Matrix_init(Matrix* mat, int width, int height) {
-  assert(false); // TODO Replace with your implementation!
+  if (0 < width) { // Check if width is invalid, exit if so
+    cout << "Width is negative!" << endl;
+    assert(false);
+  } if (0 < height) { // Check if height is invalid, exit if so
+    cout << "Height is negative!" << endl;
+    assert(false);
+  } if (mat->data = nullptr || mat->width = nullptr || mat->height = nullptr) { // Check if mat is not a matrix or one part of mat is not formatted correctly
+    cout << "mat's not formatted correctly" << endl;
+  }
+  
+  mat->data = vector<int>(height * width, 0) // Init data
+  mat->width = width; // Init width
+  mat->height = height; // Init height
 }
 
 // REQUIRES: mat points to a valid Matrix
