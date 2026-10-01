@@ -25,6 +25,21 @@ TEST(test_fill_basic) {
   }
 }
 
+TEST(test_matrix_init_bounds) { // testing differently sized matrixes
+  Matrix tinyMatrix; // Make a very small matrix
+  Matrix_init(&tinyMatrix, 1, 1);
+
+  Matrix bigMatrix; // Make a very large matrix
+  Matrix_init(&tinyMatrix, 100, 100);
+
+  ASSERT_EQUAL(Matrix_width(&tinyMatrix), 1); // Correct bounds
+  ASSERT_EQUAL(Matrix_height(&tinyMatrix), 1);
+
+  ASSERT_EQUAL(Matrix_width(&bigMatrix), 100); // Correct bounds
+  ASSERT_EQUAL(Matrix_height(&bigMatrix), 100);
+}
+
+
 // ADD YOUR TESTS HERE
 // You are encouraged to use any functions from Matrix_test_helpers.hpp as needed.
 

@@ -1,5 +1,6 @@
 #include <cassert>
 #include "Matrix.hpp"
+using namespace std;
 
 // REQUIRES: mat points to a Matrix
 //           0 < width && 0 < height
