@@ -64,12 +64,13 @@ void Image_init(Image* img, std::istream& is) {
 
   Image_init(img, width, height); // prepare img
 
-  int r; //Prepare color variables
-  int g;
-  int b;
+  int r = 0; //Prepare color variables
+  int g = 0;
+  int b = 0;
 
   for (int i = 0; i < height; i++) { // Check that all values are -2
     for (int j = 0; j < width; j++) {
+      
       is >> r; // Read each color and check that they are valid
       is >> g;
       is >> b;
