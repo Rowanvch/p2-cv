@@ -93,32 +93,26 @@ void compute_energy_matrix(const Image* img, Matrix* energy) {
   int h = Matrix_height(energy); // Pull dimensions 
   int w = Matrix_width(energy);
 
+
   for (int i = 0; i < h; i++) {
     for (int j = 0; j < w; j++) {
-      int west = j - 1; // basic positioning
-      int east = j + 1;
-      int north = i - 1;
-      int south = i + 1;
-      
-      if (j == 0) { // Check if at edge
-        west = w - 1;
-      } if (j == w - 1) {
-        east = 0;
-      } if (i == 0) {
-        north = h - 1;
-      } if (i == h - 1) {
-        south = 0;
-      } 
-
-      Pixel west_pixel = Image_get_pixel(img, i, west); // set the pixels
-      Pixel east_pixel = Image_get_pixel(img, i, east);
-      Pixel north_pixel = Image_get_pixel(img, north, j);
-      Pixel south_pixel = Image_get_pixel(img, south, j);
+      if (i == 0 || i == h - 1 || j == 0 || j == w - 1) {
+        continue;
+      }
+      Pixel west_pixel = Image_get_pixel(img, i, j - 1); // set the pixels
+      Pixel east_pixel = Image_get_pixel(img, i, j + 1);
+      Pixel north_pixel = Image_get_pixel(img, i - 1, j);
+      Pixel south_pixel = Image_get_pixel(img, i + 1, j);
 
       *Matrix_at(energy, i, j) = squared_difference(west_pixel, east_pixel) + squared_difference(north_pixel, south_pixel); // Run main energy equation into energy
+    
+      
+
     }
   }
-
+  int max = Matrix_max(energy); // find max
+  // fix border
+  Matrix_fill_border(energy, max);
 
 }
 
