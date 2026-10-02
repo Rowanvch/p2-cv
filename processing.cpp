@@ -2,6 +2,7 @@
 #include <vector>
 #include <cmath>
 #include "processing.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -92,7 +93,7 @@ void compute_energy_matrix(const Image* img, Matrix* energy) {
   int h = Matrix_height(energy); // Pull dimensions 
   int w = Matrix_width(energy);
 
-  for (int i = 0; i < h; h++) {
+  for (int i = 0; i < h; i++) {
     for (int j = 0; j < w; j++) {
       int west = j - 1; // basic positioning
       int east = j + 1;
@@ -104,15 +105,15 @@ void compute_energy_matrix(const Image* img, Matrix* energy) {
       } if (j == w - 1) {
         east = 0;
       } if (i == 0) {
-        north = w - 1;
+        north = h - 1;
       } if (i == h - 1) {
         south = 0;
       } 
 
       Pixel west_pixel = Image_get_pixel(img, i, west); // set the pixels
       Pixel east_pixel = Image_get_pixel(img, i, east);
-      Pixel north_pixel = Image_get_pixel(img, j, north);
-      Pixel south_pixel = Image_get_pixel(img, j, south);
+      Pixel north_pixel = Image_get_pixel(img, north, j);
+      Pixel south_pixel = Image_get_pixel(img, south, j);
 
       *Matrix_at(energy, i, j) = squared_difference(west_pixel, east_pixel) + squared_difference(north_pixel, south_pixel); // Run main energy equation into energy
     }
@@ -137,10 +138,11 @@ void compute_vertical_cost_matrix(const Matrix* energy, Matrix *cost) {
   int h = Matrix_height(cost); // Pull dimensions 
   int w = Matrix_width(cost);
 
-  for (int i = 0; i < h; h++) { // cycle all cells to calculate cost
+  for (int i = 0; i < h; i++) { // cycle all cells to calculate cost
     for (int j = 0; j < w; j++) {
       if (i == 0) { // First row doesn't have cells above to calculate
         *Matrix_at(cost, i, j) = *Matrix_at(energy, i, j);
+        continue;
       }
 
       int s; // initiate index range
@@ -239,6 +241,7 @@ void remove_vertical_seam(Image *img, const vector<int> &seam) {
       }
     }
   }
+  *img = sliced; // return results
 }
 
 
