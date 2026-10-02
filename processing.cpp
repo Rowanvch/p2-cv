@@ -104,7 +104,9 @@ void compute_energy_matrix(const Image* img, Matrix* energy) {
       Pixel north_pixel = Image_get_pixel(img, i - 1, j);
       Pixel south_pixel = Image_get_pixel(img, i + 1, j);
 
-      *Matrix_at(energy, i, j) = squared_difference(west_pixel, east_pixel) + squared_difference(north_pixel, south_pixel); // Run main energy equation into energy
+      *Matrix_at(energy, i, j) = squared_difference(west_pixel, east_pixel) 
+      + squared_difference(north_pixel, south_pixel); 
+      // Run main energy equation into energy
     
       
 
@@ -127,7 +129,8 @@ void compute_energy_matrix(const Image* img, Matrix* energy) {
 //           computed and written into it.
 //           See the project spec for details on computing the cost matrix.
 void compute_vertical_cost_matrix(const Matrix* energy, Matrix *cost) {
-  Matrix_init(cost, Matrix_width(energy), Matrix_height(energy)); // Initialize cost
+  Matrix_init(cost, Matrix_width(energy), Matrix_height(energy)); 
+  // Initialize cost
 
   int h = Matrix_height(cost); // Pull dimensions 
   int w = Matrix_width(cost);
@@ -154,7 +157,9 @@ void compute_vertical_cost_matrix(const Matrix* energy, Matrix *cost) {
         e = j + 2;
       }
 
-      *Matrix_at(cost, i, j) = *Matrix_at(energy, i, j) + Matrix_min_value_in_row(cost, i -1, s, e); // Sum up costs from all applicable cells and save the value
+      *Matrix_at(cost, i, j) = *Matrix_at(energy, i, j) +
+       Matrix_min_value_in_row(cost, i -1, s, e); 
+       // Sum up costs from all applicable cells and save the value
 
     }
   }
@@ -176,8 +181,10 @@ vector<int> find_minimal_vertical_seam(const Matrix* cost) {
   int h = Matrix_height(cost); // Pull dimensions 
   int w = Matrix_width(cost);
 
-  vector<int> seam(h); // make vector the size of the height of the matrix for one target per row
-  int fminCol = Matrix_column_of_min_value_in_row(cost, h - 1, 0, w); // Declare and find first column
+  vector<int> seam(h); 
+  // make vector the size of the height of the matrix for one target per row
+  int fminCol = Matrix_column_of_min_value_in_row(cost, h - 1, 0, w); 
+  // Declare and find first column
 
   
   seam[h - 1] = fminCol; // Report min column on bottom
@@ -253,7 +260,8 @@ void seam_carve_width(Image *img, int newWidth) {
     compute_energy_matrix(img, &energy); // get energy
     compute_vertical_cost_matrix(&energy, &cost); // get cost
 
-    remove_vertical_seam(img, find_minimal_vertical_seam(&cost)); // return out cut pieces
+    remove_vertical_seam(img, find_minimal_vertical_seam(&cost));
+     // return out cut pieces
   }
 }
 

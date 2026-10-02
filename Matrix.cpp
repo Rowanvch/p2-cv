@@ -40,7 +40,9 @@ void Matrix_print(const Matrix* mat, std::ostream& os) {
 
   os << mat->width << " " << mat->height << endl; // Print WEIGHT and HEIGHT
 
-  for (int i = 0; i < mat->height; i++) { // Loop through each row, printing all elements by width, and ending the line after each row
+  for (int i = 0; i < mat->height; i++) { 
+    // Loop through each row, printing all elements by width, 
+    // and ending the line after each row
     for (int j = i * mat->width; j < (mat->width * i) + mat->width; j++) {
       os << mat->data[j] << " ";
     }
@@ -81,16 +83,16 @@ int Matrix_height(const Matrix* mat) {
 //           at the given row and column.
 int* Matrix_at(Matrix* mat, int row, int column) {
   if (0 > column) { // Check if column is invalid, exit if so
-    cout << "That column is negative!" << endl;
+    cout << "Your column is negative!" << endl;
     assert(false);
   } if (column >= Matrix_width(mat)) { // Check if column is invalid, exit if so
+    cout << "Your column is too large!" << endl;
+    assert(false);
+  } if (row >= Matrix_height(mat)) { // Check if row is invalid, exit if so
     cout << "That column is too large!" << endl;
     assert(false);
   } if (0 > row) { // Check if row is invalid, exit if so
     cout << "That row is negative!" << endl;
-    assert(false);
-  } if (row >= Matrix_height(mat)) { // Check if row is invalid, exit if so
-    cout << "That column is too large!" << endl;
     assert(false);
   } if (mat == nullptr) { // Check if mat is not formatted correctly
     cout << "That matrix is not formatted correctly" << endl;
@@ -107,22 +109,19 @@ int* Matrix_at(Matrix* mat, int row, int column) {
 // EFFECTS:  Returns a pointer-to-const to the element in
 //           the Matrix at the given row and column.
 const int* Matrix_at(const Matrix* mat, int row, int column) {
-  if (0 > column) { // Check if column is invalid, exit if so
-    cout << "That column is negative!" << endl;
-    assert(false);
-  } if (column >= Matrix_width(mat)) { // Check if column is invalid, exit if so
+  if (column >= Matrix_width(mat)) { // Check if column is invalid
     cout << "That column is too large!" << endl;
     assert(false);
-  } if (0 > row) { // Check if row is invalid, exit if so
+  } if (0 > row) { // Check row positive
     cout << "That row is negative!" << endl;
     assert(false);
   } if (row >= Matrix_height(mat)) { // Check if row is invalid, exit if so
     cout << "That column is too large!" << endl;
     assert(false);
-  } if (mat == nullptr) { // Check if mat is not formatted correctly
-    cout << "That matrix is not formatted correctly" << endl;
+  } if (0 > column) { // Check if column is invalid
+    cout << "That column is negative!" << endl;
     assert(false);
-  }
+  } 
 
   return &mat->data[(row * mat->width) + column]; // Fiind desired location
 }
@@ -136,7 +135,8 @@ void Matrix_fill(Matrix* mat, int value) {
     assert(false);
   }
 
-  for (int i = 0; i < (mat->height * mat->width); i++) { // Go throught each value in mat and make it the value specified
+  for (int i = 0; i < (mat->height * mat->width); i++) { // Go throught each value 
+  // in mat and make it the value specified
     mat->data[i] = value;
   }
 }
@@ -152,13 +152,18 @@ void Matrix_fill_border(Matrix* mat, int value) {
     assert(false);
   }
 
-  for (int i = 0; i < mat->height; i++) { // Loop through each row, and perform adjustments
-    if (i != 0 && i != (mat->height - 1)) { // make intermediate rows only get edge elements
-      mat->data[i * mat->width] = value; // Set first in row to specified value
-      mat->data[(i * mat->width) + mat->width - 1] = value; // Set last in row to speciied value
+  for (int i = 0; i < mat->height; i++) { // Loop through each row, 
+  // and perform adjustments
+    if (i != 0 && i != (mat->height - 1)) { // make intermediate rows
+    //  only get edge elements
+      mat->data[i * mat->width] = value; // Set first in row to 
+      // specified value
+      mat->data[(i * mat->width) + mat->width - 1] = value; 
+      // Set last in row to speciied value
       continue;
     }
-    for (int j = i * mat->width; j < (mat->width * i) + mat->width; j++) { // Modify first and last row
+    for (int j = i * mat->width; j < (mat->width * i) + mat->width; j++) { 
+      // Modify first and last row
       mat->data[j] = value;
     }
   }
@@ -174,7 +179,9 @@ int Matrix_max(const Matrix* mat) {
 
 
   int max = mat->data[0]; //Initializing max value
-  for (int i = 1; i < (mat->height * mat->width); i++) { // Go trhrough all values and compare to current max value, then set the new max if it is bigger
+  for (int i = 1; i < (mat->height * mat->width); i++) { 
+    // Go trhrough all values and compare to current max value, 
+    // then set the new max if it is bigger
     if (mat->data[i] > max) {
       max = mat->data[i];
     }
@@ -198,11 +205,11 @@ int Matrix_column_of_min_value_in_row(const Matrix* mat, int row,
   if (0 > column_start) { // Check if column is invalid, exit if so
     cout << "The starting column is negative!" << endl;
     assert(false);
-  } if (column_end > Matrix_width(mat)) { // Check if column is invalid, exit if so
+  } if (column_end > Matrix_width(mat)) { // Check if column is invalid,
     cout << "The ending column is too large!" << endl;
     assert(false);
-  } if (column_start >= column_end) { // Check if column bounds are invalid, exit if so
-    cout << "The starting column is bigger than or equal to the ending column!" << endl;
+  } if (column_start >= column_end) { // Check if column bounds are invalid
+    cout << "The starting column is >= the ending column!" << endl;
     assert(false);
   } if (0 > row) { // Check if row is invalid, exit if so
     cout << "That row is negative!" << endl;
@@ -214,9 +221,11 @@ int Matrix_column_of_min_value_in_row(const Matrix* mat, int row,
     cout << "That matrix is not formatted correctly" << endl;
     assert(false);
   }
-  int min = mat->data[(row * mat->width) + column_start]; // Initialize min value as first in region
+  int min = mat->data[(row * mat->width) + column_start]; // Initialize min value
+  //  as first in region
   int minCol = column_start; // initialize target column as first column in region
-  for (int i = (row * mat->width) + column_start; i < (row * mat->width) + column_end; i++) { // Check each value in region, and record new mins alongside column number
+  for (int i = (row * mat->width) + column_start; i < (row * mat->width) + column_end; i++) { 
+    // Check each value in region, and record new mins alongside column number
     if (mat->data[i] < min) {
       min = mat->data[i];
       minCol = i % mat->width;
@@ -238,10 +247,10 @@ int Matrix_min_value_in_row(const Matrix* mat, int row,
   if (0 > column_start) { // Check if column is invalid, exit if so
     cout << "The starting column is negative!" << endl;
     assert(false);
-  } if (column_end > Matrix_width(mat)) { // Check if column is invalid, exit if so
+  } if (column_end > Matrix_width(mat)) { // Check if column is invalid
     cout << "The ending column is too large!" << endl;
     assert(false);
-  } if (column_start > column_end) { // Check if column bounds are invalid, exit if so
+  } if (column_start > column_end) { // Check if column bounds are invalid
     cout << "The starting column is bigger than the ending column!" << endl;
     assert(false);
   } if (0 > row) { // Check if row is invalid, exit if so
@@ -254,8 +263,10 @@ int Matrix_min_value_in_row(const Matrix* mat, int row,
     cout << "That matrix is not formatted correctly" << endl;
     assert(false);
   }
-  int min = mat->data[(row * mat->width) + column_start]; // Initialize min value as first in region
-  for (int i = (row * mat->width) + column_start; i < (row * mat->width) + column_end; i++) { // Check each value in region, and record new min
+  int min = mat->data[(row * mat->width) + column_start];
+   // Initialize min value as first in region
+  for (int i = (row * mat->width) + column_start; i < (row * mat->width) + column_end; i++) { 
+    // Check each value in region, and record new min
     if (mat->data[i] < min) {
       min = mat->data[i];
     }

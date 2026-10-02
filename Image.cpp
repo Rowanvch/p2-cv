@@ -35,7 +35,8 @@ void Image_init(Image* img, int width, int height) {
 //           from the given input stream.
 // NOTE:     See the project spec for a discussion of PPM format.
 void Image_init(Image* img, std::istream& is) {
-  string setting; // Initialize and test the P3 setting at the start of the document
+  string setting; 
+  // Initialize and test the P3 setting at the start of the document
   is >> setting;
   if (setting != "P3") {
     cout << "That isn't the standard P3 setting!" << endl;
@@ -74,8 +75,10 @@ void Image_init(Image* img, std::istream& is) {
       is >> r; // Read each color and check that they are valid
       is >> g;
       is >> b;
-      if ((r < 0 || r > intensity) || (g < 0 || g > intensity) || (b < 0 || b > intensity)) {
-        cout << "The color data is invalid at (" << i  << ", " << j << ")!"<< endl;
+      if ((r < 0 || r > intensity) || (g < 0 || g > intensity) || 
+      (b < 0 || b > intensity)) {
+        cout << "The color data is invalid at (" << i  << ", " 
+        << j << ")!"<< endl;
         assert(false);
       }
 
@@ -110,7 +113,8 @@ void Image_print(const Image* img, std::ostream& os) {
   os << img->width << " " << img->height << endl;
   os << MAX_INTENSITY << endl;
 
-  for (int i = 0; i < img->height; i++) { // Loop indexing each pixel and outputing it
+  for (int i = 0; i < img->height; i++) { 
+    // Loop indexing each pixel and outputing it
     for (int j = 0; j < img->width; j++) {
     os << *Matrix_at(&img->red_channel, i, j) << " ";
     os << *Matrix_at(&img->green_channel, i, j) << " ";
@@ -149,16 +153,16 @@ int Image_height(const Image* img) {
 // EFFECTS:  Returns the pixel in the Image at the given row and column.
 Pixel Image_get_pixel(const Image* img, int row, int column) {
   if (img == nullptr) { // Check if img is not formatted correctly
-    cout <<"That image is not formatted correctly" << endl;
+    cout <<"That image is incorrectly formatted" << endl;
     assert(false);
-  } if (0 > column) { // Check if column is invalid, exit if so
+  } if (0 > column) { // if column is invalid, exit 
     cout << "That column is negative!" << endl;
-    assert(false);
-  } if (column >= Image_width(img)) { // Check if column is invalid, exit if so
-    cout << "That column is too large!" << endl;
     assert(false);
   } if (0 > row) { // Check if row is invalid, exit if so
     cout << "That row is negative!" << endl;
+    assert(false);
+  } if (column >= Image_width(img)) { // Check if column is invalid, exit
+    cout << "That column is quite too large!" << endl;
     assert(false);
   } if (row >= Image_height(img)) { // Check if row is invalid, exit if so
     cout << "That column is too large!" << endl;
@@ -180,23 +184,24 @@ Pixel Image_get_pixel(const Image* img, int row, int column) {
 //           to the given color.
 void Image_set_pixel(Image* img, int row, int column, Pixel color) {
   if (img == nullptr) { // Check if img is not formatted correctly
-    cout <<"That image is not formatted correctly" << endl;
+    cout <<"Your image is not formatted correctly" << endl;
     assert(false);
-  } if (0 > column) { // Check if column is invalid, exit if so
-    cout << "That column is negative!" << endl;
+  } if (row >= Image_height(img)) { // Check if row is invalid, exit if so
+    cout << "That column is too large!" << endl;
     assert(false);
-  } if (column >= Image_width(img)) { // Check if column is invalid, exit if so
+  } if (0 > column) { // Check if column is invalid, then exit if it is
+    cout << "Your column is negative!" << endl;
+    assert(false);
+  } if (column >= Image_width(img)) { // Check if column is invalid, exit 
     cout << "That column is too large!" << endl;
     assert(false);
   } if (0 > row) { // Check if row is invalid, exit if so
     cout << "That row is negative!" << endl;
     assert(false);
-  } if (row >= Image_height(img)) { // Check if row is invalid, exit if so
-    cout << "That column is too large!" << endl;
-    assert(false);
-  }
+  } 
 
-  *Matrix_at(&img->red_channel, row, column) = color.r; // modify each color of pixel to specified pixel
+  *Matrix_at(&img->red_channel, row, column) = color.r; 
+  // modify each color of pixel to specified pixel
   *Matrix_at(&img->green_channel, row, column) = color.g;
   *Matrix_at(&img->blue_channel, row, column) = color.b;
 }
@@ -210,7 +215,8 @@ void Image_fill(Image* img, Pixel color) {
     assert(false);
   }
 
-  Matrix_fill(&img->red_channel, color.r); // fill each matrix channel with appropriate color value
+  Matrix_fill(&img->red_channel, color.r); 
+  // fill each matrix channel with appropriate color value
   Matrix_fill(&img->green_channel, color.g);
   Matrix_fill(&img->blue_channel, color.b);
 }

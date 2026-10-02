@@ -25,10 +25,12 @@ int main(int argc, char* argv[]) {
   int newWidth = stoi(argv[3]); // take width
 
   if (newWidth > Image_width(&img)) { // check if width is too big
-    cout << "Usage: resize.exe IN_FILENAME OUT_FILENAME WIDTH [HEIGHT]\n" << "WIDTH and HEIGHT must be less than or equal to original" << endl;
+    cout << "Usage: resize.exe IN_FILENAME OUT_FILENAME WIDTH [HEIGHT]\n" 
+    << "WIDTH and HEIGHT must be less than or equal to original" << endl;
     return 1;
   } if (newWidth <= 0) { // check if width is too small
-    cout << "Usage: resize.exe IN_FILENAME OUT_FILENAME WIDTH [HEIGHT]\n" << "WIDTH and HEIGHT must be less than or equal to original" << endl;
+    cout << "Usage: resize.exe IN_FILENAME OUT_FILENAME WIDTH [HEIGHT]\n" 
+    << "WIDTH and HEIGHT must be less than or equal to original" << endl;
     return 1;
   }
 
@@ -38,10 +40,12 @@ int main(int argc, char* argv[]) {
     int newHeight = stoi(argv[4]);
 
     if (newHeight > Image_height(&img)) { // check if height is too big
-      cout << "Usage: resize.exe IN_FILENAME OUT_FILENAME WIDTH [HEIGHT]\n" << "WIDTH and HEIGHT must be less than or equal to original" << endl;
+      cout << "Usage: resize.exe IN_FILENAME OUT_FILENAME WIDTH [HEIGHT]\n" 
+      << "WIDTH and HEIGHT must be less than or equal to original" << endl;
       return 1;
     } if (newHeight <= 0) { // check if height is too small
-      cout << "Usage: resize.exe IN_FILENAME OUT_FILENAME WIDTH [HEIGHT]\n" << "WIDTH and HEIGHT must be less than or equal to original" << endl;
+      cout << "Usage: resize.exe IN_FILENAME OUT_FILENAME WIDTH [HEIGHT]\n" 
+      << "WIDTH and HEIGHT must be less than or equal to original" << endl;
       return 1;
     }
     seam_carve(&img, newWidth, newHeight);

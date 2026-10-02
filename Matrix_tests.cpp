@@ -44,7 +44,8 @@ TEST(test_print_stress) { // testing a large matrix, with different values for e
   Matrix_init(&norMatrix, 7, 5);
 
   for (int i = 0; i < (Matrix_width(&norMatrix) * Matrix_height(&norMatrix)); i++) { // Fill matrix with sequential values
-    norMatrix.data[i] = i;
+    *Matrix_at(&norMatrix, i / Matrix_width(&norMatrix),
+  i % Matrix_width(&norMatrix)) = i;
   }
 
   ostringstream os; // Open output
@@ -58,7 +59,7 @@ TEST(test_print_single_negative) { // test if print can handle stange matrixes l
   Matrix singleNeg; // Initialize testing matrix with single cell
   Matrix_init(&singleNeg, 1, 1);
 
-  singleNeg.data[0] = -32; // Set the value to a negative specific value
+  *Matrix_at(&singleNeg, 0, 0) = -32; // Set the value to a negative specific value
   
   ostringstream os; // open output
   
@@ -85,8 +86,9 @@ TEST(test_at_stress) { // testing that the at function finds values at all appro
   Matrix norMatrix; // Initialize test matrix with odd dimensions
   Matrix_init(&norMatrix, 4, 3);
 
-  for (int i = 0; i < (Matrix_width(&norMatrix) * Matrix_height(&norMatrix)); i++) { // fill matrix
-    norMatrix.data[i] = i;
+  for (int i = 0; i < (Matrix_width(&norMatrix) * Matrix_height(&norMatrix)); i++) { // Fill matrix with sequential values
+    *Matrix_at(&norMatrix, i / Matrix_width(&norMatrix),
+  i % Matrix_width(&norMatrix)) = i;
   }
 
   for (int i = 0; i < Matrix_height(&norMatrix); i++) { // Match each element to the function to test
@@ -108,7 +110,7 @@ TEST(test_at_modifications) { // quick test for any possible modifications as a 
   Matrix singleMatrix; // Initialize test matrix with single value
   Matrix_init(&singleMatrix, 1, 1);
 
-  singleMatrix.data[0] = 3; // initialize specific value
+  *Matrix_at(&singleMatrix, 0, 0) = 3; // initialize specific value
 
   ASSERT_EQUAL(*Matrix_at(&singleMatrix, 0, 0), 3); // run twice for any changes
   ASSERT_EQUAL(*Matrix_at(&singleMatrix, 0, 0), 3);
@@ -203,12 +205,14 @@ TEST(test_minimum_column_bounds) { // test small and large ranges
   Matrix_init(&norMatrix1, 4, 3);
   Matrix_init(&norMatrix2, 5, 5);
 
-  for (int i = 0; i < (Matrix_width(&norMatrix1) * Matrix_height(&norMatrix1)); i++) { // Fill matrixes sequentially
-    norMatrix1.data[i] = i;
+  for (int i = 0; i < (Matrix_width(&norMatrix1) * Matrix_height(&norMatrix1)); i++) { // Fill matrix with sequential values
+    *Matrix_at(&norMatrix1, i / Matrix_width(&norMatrix1),
+  i % Matrix_width(&norMatrix1)) = i;
   }
 
-  for (int i = 0; i < (Matrix_width(&norMatrix2) * Matrix_height(&norMatrix2)); i++) {
-    norMatrix2.data[i] = i;
+  for (int i = 0; i < (Matrix_width(&norMatrix2) * Matrix_height(&norMatrix2)); i++) { // Fill matrix with sequential values
+    *Matrix_at(&norMatrix2, i / Matrix_width(&norMatrix2),
+  i % Matrix_width(&norMatrix2)) = i;
   }
 
   *Matrix_at(&norMatrix1, 2, 2) = -2; // set low values to check that bounds are correct
@@ -238,12 +242,14 @@ TEST(test_minimum_column_value_bounds) { // test small and large ranges
   Matrix_init(&norMatrix1, 4, 3);
   Matrix_init(&norMatrix2, 5, 5);
 
-  for (int i = 0; i < (Matrix_width(&norMatrix1) * Matrix_height(&norMatrix1)); i++) { // Fill matrixes sequentially
-    norMatrix1.data[i] = i;
+  for (int i = 0; i < (Matrix_width(&norMatrix1) * Matrix_height(&norMatrix1)); i++) { // Fill matrix with sequential values
+    *Matrix_at(&norMatrix1, i / Matrix_width(&norMatrix1),
+  i % Matrix_width(&norMatrix1)) = i;
   }
 
-  for (int i = 0; i < (Matrix_width(&norMatrix2) * Matrix_height(&norMatrix2)); i++) {
-    norMatrix2.data[i] = i;
+  for (int i = 0; i < (Matrix_width(&norMatrix2) * Matrix_height(&norMatrix2)); i++) { // Fill matrix with sequential values
+    *Matrix_at(&norMatrix2, i / Matrix_width(&norMatrix2),
+  i % Matrix_width(&norMatrix2)) = i;
   }
 
   *Matrix_at(&norMatrix1, 2, 2) = -2; // set low values to check that bounds are correct
