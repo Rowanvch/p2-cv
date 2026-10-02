@@ -135,7 +135,8 @@ void Matrix_fill(Matrix* mat, int value) {
     assert(false);
   }
 
-  for (int i = 0; i < (mat->height * mat->width); i++) { // Go throught each value 
+  for (int i = 0; i < (mat->height * mat->width); i++) { 
+    // Go throught each value 
   // in mat and make it the value specified
     mat->data[i] = value;
   }
@@ -224,7 +225,8 @@ int Matrix_column_of_min_value_in_row(const Matrix* mat, int row,
   int min = mat->data[(row * mat->width) + column_start]; // Initialize min value
   //  as first in region
   int minCol = column_start; // initialize target column as first column in region
-  for (int i = (row * mat->width) + column_start; i < (row * mat->width) + column_end; i++) { 
+  for (int i = (row * mat->width) + column_start; 
+  i < (row * mat->width) + column_end; i++) { 
     // Check each value in region, and record new mins alongside column number
     if (mat->data[i] < min) {
       min = mat->data[i];
@@ -265,7 +267,8 @@ int Matrix_min_value_in_row(const Matrix* mat, int row,
   }
   int min = mat->data[(row * mat->width) + column_start];
    // Initialize min value as first in region
-  for (int i = (row * mat->width) + column_start; i < (row * mat->width) + column_end; i++) { 
+  for (int i = (row * mat->width) + column_start; 
+  i < (row * mat->width) + column_end; i++) { 
     // Check each value in region, and record new min
     if (mat->data[i] < min) {
       min = mat->data[i];
